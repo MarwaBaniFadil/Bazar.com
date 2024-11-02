@@ -1,11 +1,11 @@
 //import the require modules 
-const express = require('express');              //1)import express module for bulding servers
-const http = require('http');                    //2)import http module for http req
-const axios = require('axios');                  //3)import axios module for req also
-const sqlite3 = require('sqlite3').verbose();    //4)Import Sqlite3 module for database
-const db = new sqlite3.Database('database.db');  //create Sqlite3 database instance
-const app = express();                           //create express app
-const port = 5003;                               //the port for front end server is 5000
+const express = require('express');
+const http = require('http'); 
+const axios = require('axios'); 
+const sqlite3 = require('sqlite3').verbose();  
+const db = new sqlite3.Database('database.db'); 
+const app = express();                        
+const port = 5003;                           
 
 let ordersql = `CREATE TABLE IF NOT EXISTS "order" (order_number INTEGER PRIMARY KEY, item_number)`;   // sql query to create order table
 

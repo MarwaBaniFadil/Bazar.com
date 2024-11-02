@@ -29,6 +29,19 @@ function searchTopic(topic, callback){                                          
         });
     })
     }  
+    function showAllBooks(callback) { // Function to show all books in the catalog
+        const sql = `SELECT * FROM catalog`; // SQL query to select all books
+        db.all(sql, [], (err, rows) => { // Execute the SQL query
+            if (err) {
+                callback(err, null); // Handle errors if they occur
+            } else {
+                callback(null, rows); // Return the fetched rows
+            }
+        });
+    }
+    
+
+
 function info(id, callback) {                                                  //function to retrieve info about an item 
     const sql = `SELECT * FROM catalog WHERE id = ?`;
     db.all(sql, [id], (err, row) => {
@@ -58,5 +71,6 @@ function updatequantity(quantity,id,callback){                                  
         insertIntoCatalog,
         searchTopic,
         info,
-        updatequantity
+        updatequantity,
+        showAllBooks
      }
