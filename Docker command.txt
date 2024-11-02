@@ -1,0 +1,100 @@
+docker stop my-redis  
+docker rm my-redis 
+
+docker stop frontend  
+docker rm frontend  
+
+docker stop order
+docker rm order
+
+docker stop catalog
+docker rm catalog
+
+docker stop order_replica
+docker rm order_replica
+
+docker stop catalog_replica
+docker rm catalog_replica
+-----------------------------------------------------------------------------------------------
+in  cmd run as adminStrater :
+
+--> cd C:\Users\jomaa\Downloads\Redis-x64-3.0.504
+--> redis-server
+
+-----------------------------------------------------------------------------------------------
+in bazar ->
+
+docker build -t my-app .
+docker network create projectPart1-net
+
+-----------------------------------------------------------------------------------------------
+cmd in catalog to catoalog->
+
+docker run --name=catalog -p 5000:5000  --network=projectPart1-net -it -v .:/home  my-app
+
+npm install express
+npm install axios
+npm i sqlite3
+
+
+node Database.js
+node catalog.js
+
+-----------------------------------------------------------------------------------------------
+cmd in order to order ->
+
+docker run  --name=order  -p 5001:5001  --network=projectPart1-net -it -v .:/home  my-app
+
+npm install express
+npm install axios
+npm i sqlite3
+
+
+node order.js
+-----------------------------------------------------------------------------------------------
+cmd in frontend to frontend  ->
+
+docker pull redis
+docker run -d --name my-redis --network projectPart1-net -p 6379:6379 redis
+
+
+docker run  --name=frontend   -p 5002:5002  --network=projectPart1-net -it -v .:/home  my-app
+
+npm install express
+npm install axios
+npm i sqlite3
+npm install redis
+
+node frontend.js
+---------------------------------------------------------------------------------------------
+cmd in order to order_replica ->
+
+docker run  --name=order_replica  -p 5003:5003  --network=projectPart1-net -it -v .:/home  my-app
+
+npm install express
+npm install axios
+npm i sqlite3
+
+node order_replica.js
+---------------------------------------------------------------------------------------------
+cmd in order to catalog_replica ->
+
+docker run  --name=catalog_replica  -p 5004:5004  --network=projectPart1-net -it -v .:/home  my-app
+
+npm install express
+npm install axios
+npm i sqlite3
+
+node catalog_repleca.js
+---------------------------------------------------------------------------------------------
+
+catalog 5000
+order 5001
+frontend 5002
+
+order_replica 5003
+catalog_replica 5004
+
+my-redis 6379
+
+
